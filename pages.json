@@ -1,0 +1,121 @@
+{
+	"pages": [{
+			"path": "pages/home/index",
+			"style": {
+				"app-plus": {
+					// App端导航栏配置
+					"titleNView": {
+						// 搜索框配置
+						"searchInput": {
+							"align": "center",
+							"backgroundColor": "#f5f4f2",
+							"borderRadius": "4px",
+							"disabled": true,
+							"placeholder": "搜搜帖子",
+							"placeholderColor": "#6D6c67"
+						},
+						"buttons": [{
+								"color": "#333",
+								"colorPressed": "#FD597c",
+								"float": "right",
+								"fontSize": "25px",
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue6b0"
+							}
+
+						]
+					}
+				},
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				}
+			}
+		},
+		{
+			"path": "pages/news/news"
+		},
+		{
+			"path": "pages/msg/msg"
+		},
+		{
+			"path": "pages/my/my"
+		}, {
+			"path": "pages/search/search",
+			"style": {
+				"app-plus": {
+					// App端导航栏配置
+					"titleNView": {
+						"backButton": {
+							"color": "#333"
+						},
+						// 搜索框配置
+						"searchInput": {
+							"align": "center",
+							"backgroundColor": "#f5f4f2",
+							"borderRadius": "4px",
+							"placeholder": "搜搜帖子",
+							"placeholderColor": "#6D6c67"
+						},
+						"buttons": [{
+								"color": "#333",
+								"colorPressed": "#FD597c",
+								"float": "right",
+								"fontSize": "14px",
+								"text": "搜索"
+							}
+
+						]
+					}
+				}
+			}
+		}
+	    ,{
+            "path" : "pages/add-input/add-input",
+            "style" : {
+				"app-plus":{
+					"titleNView":false
+					
+					
+				}
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "首页"
+	},
+
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#fc5c82",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+				"pagePath": "pages/home/index",
+				"iconPath": "./static/Tabimg/Dt-1.png",
+				"selectedIconPath": "static/Tabimg/Dt-0.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/news/news",
+				"iconPath": "./static/Tabimg/Fx-1.png",
+				"selectedIconPath": "static/Tabimg/Fx-0.png",
+				"text": "动态"
+			},
+			{
+				"pagePath": "pages/msg/msg",
+				"iconPath": "./static/Tabimg/XX-1.png",
+				"selectedIconPath": "static/Tabimg/XX-0.png",
+				"text": "消息"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "./static/Tabimg/my-1.png",
+				"selectedIconPath": "static/Tabimg/my-0.png",
+				"text": "我的"
+			}
+		]
+	}
+}
