@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": true,
   "navigationBarBackgroundColor": "#FF4A6A",
   "usingComponents": {
     "common-list": "/components/common/common-list",

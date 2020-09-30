@@ -53,8 +53,7 @@
 							},
 							comment_count: 2,
 							share_name: 2
-						},
-						{
+						},{
 							username: '虾老板',
 							userpic: '../../static/xia.jpg',
 							newstime: '2020-20-20 下午4:32',
@@ -68,98 +67,7 @@
 							},
 							comment_count: 2,
 							share_name: 2
-						},
-						{
-							username: '面包渣',
-							userpic: '../../static/mb.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '文明观猴禁止炸房',
-							titlepic: '../../static/kx.jpg',
-							support: {
-								type: '',
-								support_count: 1,
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						},
-						{
-							username: '虾老板的狗',
-							userpic: '../../static/lxg.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我是狗',
-							titlepic: '../../static/lxg-1.jpg',
-							support: {
-								type: '',
-								support_count: 1,
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						},
-						{
-							username: '小可的猫',
-							userpic: '../../static/xkm.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我是猫',
-							titlepic: '../../static/xkm.jpg',
-							support: {
-								type: 'unsupport',
-								support_count: 0,
-								unsupport_count: 1
-							},
-							comment_count: 2,
-							share_name: 2
-						},
-						{
-							username: '小狗',
-							userpic: '../../static/timg.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我虽然是够但是主人是真的狗',
-							titlepic: '',
-							support: {
-								type: '',
-								support_count: 1,
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						},
-						{
-							username: '我是WWWWWW',
-							userpic: '../../static/timg.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我潜水！！！！你们加油 奥利给',
-							titlepic: '../../static/u=1465454355,109973978&fm=26&gp=0.jpg',
-							support: {
-								type: '',
-								support_count: 1,
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						},
-						{
-							username: '虾老板',
-							userpic: '../../static/xia.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我今晚想唱歌 可以吗',
-							titlepic: '../../static/u=1465454355,109973978&fm=26&gp=0.jpg',
-							support: {
-								type: '',
-								support_count: 1,
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						}
-						]
+						}]
 import commonList from '@/components/common/common-list.vue';
 import loadMore from '@/components/common/load-more';
 export default {
@@ -221,7 +129,32 @@ export default {
 			url:'../search/search'
 		})
 	},
+	onPullDownRefresh(){
+			setTimeout(()=>{
+				this.getdata()
+				uni.stopPullDownRefresh()
+			},800)
+	},
 	onLoad() {
+		
+		//临时代码
+		uni.getStorage({
+			key:"addlist",
+			success:res=>{
+				let result = res.data
+				demo.unshift(result)
+			}
+			
+		})
+		
+		
+		
+		// 临时代码
+		
+		
+		
+		
+		
 		let getwindows = uni.getSystemInfoSync();
 		this.windowHeight = getwindows.windowHeight - uni.upx2px(102);
 		this.getData();

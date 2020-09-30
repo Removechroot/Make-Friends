@@ -2,7 +2,9 @@
 	"pages": [{
 			"path": "pages/home/index",
 			"style": {
+				"enablePullDownRefresh": true,
 				"app-plus": {
+					"enablePullDownRefresh": true,
 					// App端导航栏配置
 					"titleNView": {
 						// 搜索框配置
@@ -33,13 +35,58 @@
 			}
 		},
 		{
-			"path": "pages/news/news"
+			"path": "pages/news/news",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+				},
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				}
+			}
 		},
 		{
-			"path": "pages/msg/msg"
+			"path": "pages/msg/msg",
+			"style": {
+				"navigationBarTitleText": "消息列表",
+				"enablePullDownRefresh": true,
+
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+								"color": "#333",
+								"colorPressed": "#FD597c",
+								"float": "left",
+								"fontSize": "25px",
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue625"
+							},
+							{
+								"color": "#333",
+								"colorPressed": "#FD597c",
+								"float": "right",
+								"fontSize": "25px",
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue648"
+							}
+						]
+					}
+				},
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				}
+			}
 		},
 		{
-			"path": "pages/my/my"
+			"path": "pages/my/my",
+			"style": {
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				}
+			}
 		}, {
 			"path": "pages/search/search",
 			"style": {
@@ -67,20 +114,47 @@
 
 						]
 					}
+				},
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				}
+
+			}
+		}, {
+			"path": "pages/add-input/add-input",
+			"style": {
+				"app-plus": {
+					"titleNView": false
+
+
+				},
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
 				}
 			}
 		}
-	    ,{
-            "path" : "pages/add-input/add-input",
-            "style" : {
-				"app-plus":{
-					"titleNView":false
-					
-					
+
+		, {
+			"path": "pages/topic-cate/topic-cate",
+			"style": {
+				"navigationBarTitleText": "话题分类"
+			}
+		}, {
+			"path": "pages/topic-detail/topic-detail",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent",
+						"buttons": [{
+							"type": "menu"
+						}]
+					}
 				}
 			}
-        }
-    ],
+		}
+	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"navigationBarTextStyle": "white",
@@ -99,6 +173,7 @@
 				"text": "首页"
 			},
 			{
+				// "pagePath":"pages/add-input/add-input",
 				"pagePath": "pages/news/news",
 				"iconPath": "./static/Tabimg/Fx-1.png",
 				"selectedIconPath": "static/Tabimg/Fx-0.png",

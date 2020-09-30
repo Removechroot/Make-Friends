@@ -3,6 +3,7 @@
 		<view class="uni-uploader">
 			<view class="uni-uploader-head">
 				<view class="uni-uploader-title">点击可预览选好的图片</view>
+				
 				<view class="uni-uploader-info">{{ imageList.length }}/9</view>
 			</view>
 			<view class="uni-uploader-body">
@@ -29,6 +30,8 @@ import permision from './permission.js';
 var sourceType = [['camera'], ['album'], ['camera', 'album']];
 var sizeType = [['compressed'], ['original'], ['compressed', 'original']];
 export default {
+	props:['list'],
+
 	data() {
 		return {
 			imageList: [],
@@ -40,14 +43,20 @@ export default {
 			count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		};
 	},
+	mounted() {
+		this.imageList = this.list
+	},
 	onUnload() {
+
 		(this.imageList = []),
 			(this.sourceTypeIndex = 2),
 			(this.sourceType = ['拍照', '相册', '拍照或相册']),
 			(this.sizeTypeIndex = 2),
 			(this.sizeType = ['压缩', '原图', '压缩或原图']),
 			(this.countIndex = 8);
+			
 	},
+
 	methods: {
 		deleteImage(index){
 			uni.showModal({
