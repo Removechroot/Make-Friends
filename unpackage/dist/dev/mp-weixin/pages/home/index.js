@@ -201,7 +201,7 @@ var demo = [{
     unsupport_count: '999+' },
 
   comment_count: 2,
-  share_name: 2 }];var commonList = function commonList() {__webpack_require__.e(/*! require.ensure | components/common/common-list */ "components/common/common-list").then((function () {return resolve(__webpack_require__(/*! @/components/common/common-list.vue */ 75));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var loadMore = function loadMore() {__webpack_require__.e(/*! require.ensure | components/common/load-more */ "components/common/load-more").then((function () {return resolve(__webpack_require__(/*! @/components/common/load-more */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+  share_name: 2 }];var commonList = function commonList() {__webpack_require__.e(/*! require.ensure | components/common/common-list */ "components/common/common-list").then((function () {return resolve(__webpack_require__(/*! @/components/common/common-list.vue */ 87));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var loadMore = function loadMore() {__webpack_require__.e(/*! require.ensure | components/common/load-more */ "components/common/load-more").then((function () {return resolve(__webpack_require__(/*! @/components/common/load-more */ 94));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

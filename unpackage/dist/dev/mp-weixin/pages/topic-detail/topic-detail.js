@@ -92,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   topicDetail: function() {
-    return __webpack_require__.e(/*! import() | components/topic-detail/topic-detail */ "components/topic-detail/topic-detail").then(__webpack_require__.bind(null, /*! @/components/topic-detail/topic-detail.vue */ 128))
+    return __webpack_require__.e(/*! import() | components/topic-detail/topic-detail */ "components/topic-detail/topic-detail").then(__webpack_require__.bind(null, /*! @/components/topic-detail/topic-detail.vue */ 140))
   }
 }
 var render = function() {
@@ -208,7 +208,7 @@ var demo = [{
     unsupport_count: '999+' },
 
   comment_count: 2,
-  share_name: 2 }];var topicDetail = function topicDetail() {__webpack_require__.e(/*! require.ensure | components/topic-detail/topic-detail */ "components/topic-detail/topic-detail").then((function () {return resolve(__webpack_require__(/*! ../../components/topic-detail/topic-detail.vue */ 128));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var commonList = function commonList() {__webpack_require__.e(/*! require.ensure | components/common/common-list */ "components/common/common-list").then((function () {return resolve(__webpack_require__(/*! @/components/common/common-list.vue */ 75));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var nothing = function nothing() {__webpack_require__.e(/*! require.ensure | components/common/nothing */ "components/common/nothing").then((function () {return resolve(__webpack_require__(/*! ../../components/common/nothing.vue */ 70));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var loadMore = function loadMore() {__webpack_require__.e(/*! require.ensure | components/common/load-more */ "components/common/load-more").then((function () {return resolve(__webpack_require__(/*! @/components/common/load-more */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+  share_name: 2 }];var topicDetail = function topicDetail() {__webpack_require__.e(/*! require.ensure | components/topic-detail/topic-detail */ "components/topic-detail/topic-detail").then((function () {return resolve(__webpack_require__(/*! ../../components/topic-detail/topic-detail.vue */ 140));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var commonList = function commonList() {__webpack_require__.e(/*! require.ensure | components/common/common-list */ "components/common/common-list").then((function () {return resolve(__webpack_require__(/*! @/components/common/common-list.vue */ 87));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var nothing = function nothing() {__webpack_require__.e(/*! require.ensure | components/common/nothing */ "components/common/nothing").then((function () {return resolve(__webpack_require__(/*! ../../components/common/nothing.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var loadMore = function loadMore() {__webpack_require__.e(/*! require.ensure | components/common/load-more */ "components/common/load-more").then((function () {return resolve(__webpack_require__(/*! @/components/common/load-more */ 94));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 

@@ -126,7 +126,7 @@ export default {
 	// 点击搜索文本框
 	onNavigationBarSearchInputClicked(){
 		uni.navigateTo({
-			url:'../search/search'
+			url:'../search/search?type=post'
 		})
 	},
 	onPullDownRefresh(){

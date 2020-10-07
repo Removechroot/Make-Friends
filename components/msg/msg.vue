@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<block>
-			<view class="flex border-bottom align-center p-2 mt-2 border-light-secondary" style="height: 100rpx;">
+			<view class="flex border-bottom align-center p-2 mt-2 border-light-secondary" hover-class="bg-light" style="height: 100rpx;" @click="open">
 				<image :src="item.avatar" class="rounded-circle" style="width: 80rpx;height: 80rpx;"></image>
 				<view class="flex flex-column ml-2 font flex-1">
 					<view class="flex align-center justify-between">
@@ -37,7 +37,14 @@ export default {
 			return formatTime.gettime(value);
 		}
 	},
-	methods: {}
+	methods: {
+		open(){
+			// console.log('asd')
+			uni.navigateTo({
+				url:'../../pages/user-chat/user-chat'
+			})
+		}
+	}
 };
 </script>
 

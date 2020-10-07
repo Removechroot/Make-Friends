@@ -1,6 +1,6 @@
 <template>
 	<!-- 首页卡片 -->
-	<view class="p-2">
+	<view class="p-2" >
 		<!-- 头像文字与关注 -->
 		<view class="flex align-center justify-between">
 			<view class="flex justify-center align-center img">
@@ -18,8 +18,11 @@
 		<view>
 			<!-- 内容区域 -->
 			<view class="centencon" @click="openDtail">{{ item.title }}</view>
+			<!-- 详情 -->
+			<slot>
 			<!-- 图片区域 -->
 			<image v-if="item.titlepic" :src="item.titlepic" @click="openDtail" style="height: 355rpx; border-radius: 5px;" class="w-100"></image>
+		</slot>
 		</view>
 		<!-- 底部图表 -->
 		<view class="flex bottom">
@@ -45,13 +48,13 @@
 				<text>{{ item.support.unsupport_count }}</text>
 			</view>
 
-			<view class="flex align-center justify-center flex-1 animate__animated animate__faster" @click="openDtail" hover-class="animate__animated animate__jello animate__fast">
+			<view class="flex align-center justify-center flex-1 animate__animated animate__faster" @click="doComment" hover-class="animate__animated animate__jello animate__fast">
 				<text class="iconfont icon-pinglun mr-2"></text>
 				<text>{{ item.comment_count }}</text>
 			</view>
 
 			
-			<view class="flex align-center justify-center flex-1 animate__animated animate__faster" @click="openDtail" hover-class="animate__animated animate__jello animate__fast">
+			<view class="flex align-center justify-center flex-1 animate__animated animate__faster" @click="doShare" hover-class="animate__animated animate__jello animate__fast">
 				<text class="iconfont icon-fenxiang_2 mr-2"></text>
 				<text>{{ item.share_name }}</text>
 			</view>
@@ -66,7 +69,11 @@ export default {
 	},
 	props: {
 		item: Object,
-		index: Number
+		index: {
+			type:Number,
+			default:-1
+		},
+		isdetail:false
 	},
 	methods: {
 		openspace() {
@@ -76,7 +83,10 @@ export default {
 			this.$emit('Follow', this.index);
 		},
 		openDtail() {
-			console.log(3);
+			if(this.isdetail) return
+			uni.navigateTo({
+				url:"../../pages/detail/detail?detail=" + JSON.stringify(this.item)
+			})
 		},
 		// 顶踩操作
 		dosupport(type) {
@@ -85,6 +95,18 @@ export default {
 				type
 			});
 			
+		},
+		doComment(){
+			if(!this.isdetail){
+				return this.openDtail()
+			}
+			this.$emit('doComment')
+		},
+		doShare(){
+			if(!this.isdetail){
+				return this.openDtail()
+			}
+			this.$emit('doShare')
 		}
 	}
 };

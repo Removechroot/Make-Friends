@@ -75,12 +75,17 @@ export default {
 	onPullDownRefresh() {
 		this.refres();
 	},
+	// 点击头部按钮
 	onNavigationBarButtonTap(e) {
 		switch (e.index) {
 			case 0: //左边
+				uni.navigateTo({
+					url:'../user-list/user-list'
+				})
+				this.$refs.popup.close()
 				break;
 			case 1: // 右边
-				this.$refs.popup.open();
+				this.$refs.popup.open()
 				break;
 		}
 	},
@@ -95,6 +100,9 @@ export default {
 		},
 		// 添加好友
 		popupEventAdd(){
+			uni.navigateTo({
+				url:'../search/search?type=user'
+			})
 			this.$refs.popup.close()
 		},
 		// 清除列表

@@ -92,10 +92,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   msg: function() {
-    return Promise.all(/*! import() | components/msg/msg */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/msg/msg")]).then(__webpack_require__.bind(null, /*! @/components/msg/msg.vue */ 104))
+    return Promise.all(/*! import() | components/msg/msg */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/msg/msg")]).then(__webpack_require__.bind(null, /*! @/components/msg/msg.vue */ 116))
   },
   uniPopup: function() {
-    return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 110))
+    return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 122))
   }
 }
 var render = function() {
@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var msg = function msg() {Promise.all(/*! require.ensure | components/msg/msg */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/msg/msg")]).then((function () {return resolve(__webpack_require__(/*! @/components/msg/msg.vue */ 104));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var nothing = function nothing() {__webpack_require__.e(/*! require.ensure | components/common/nothing */ "components/common/nothing").then((function () {return resolve(__webpack_require__(/*! ../../components/common/nothing.vue */ 70));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! ../../components/uni-popup/uni-popup.vue */ 110));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var msg = function msg() {Promise.all(/*! require.ensure | components/msg/msg */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/msg/msg")]).then((function () {return resolve(__webpack_require__(/*! @/components/msg/msg.vue */ 116));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var nothing = function nothing() {__webpack_require__.e(/*! require.ensure | components/common/nothing */ "components/common/nothing").then((function () {return resolve(__webpack_require__(/*! ../../components/common/nothing.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniPopup = function uniPopup() {__webpack_require__.e(/*! require.ensure | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then((function () {return resolve(__webpack_require__(/*! ../../components/uni-popup/uni-popup.vue */ 122));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -212,9 +212,14 @@ __webpack_require__.r(__webpack_exports__);
   onPullDownRefresh: function onPullDownRefresh() {
     this.refres();
   },
+  // 点击头部按钮
   onNavigationBarButtonTap: function onNavigationBarButtonTap(e) {
     switch (e.index) {
       case 0: //左边
+        uni.navigateTo({
+          url: '../user-list/user-list' });
+
+        this.$refs.popup.close();
         break;
       case 1: // 右边
         this.$refs.popup.open();

@@ -10,7 +10,20 @@
 
 		<template v-else>
 			<!-- 数据列表 -->
-			<block v-for="(item, index) in searchList" :key="index"><common-list :item="item" :index="index"></common-list></block>
+			<block v-for="(item, index) in searchList" :key="index">
+				<template v-if="type === 'post'">
+				<!-- 帖子 -->
+				<common-list :item="item" :index="index"></common-list>
+				</template>
+				<!-- 话题 -->
+				<template v-else-if="type==='topic'">
+				<topic-list :index='index' :item="item"></topic-list>
+				</template>
+				<!-- 用户 -->
+				<template v-else>
+				<user-list :index='index' :item="item"></user-list>
+				</template>
+				</block>
 		</template>
 	</view>
 </template>
@@ -39,7 +52,7 @@ const demo = [
 		userpic: '../../static/xia.jpg',
 		newstime: '2020-20-20 下午4:32',
 		isFollow: false,
-		title: '我喜欢了一个30岁的女人...居然让我....',
+		title: '...居然让我....',
 		titlepic: '',
 		support: {
 			type: 'unsupport',
@@ -140,23 +153,73 @@ const demo = [
 		share_name: 2
 	}
 ];
-
+const demo2 = [
+	{
+		cover: '/static/demo1ima.jpg',
+		title: '话题名称',
+		desc: '话题描述',
+		today_count: 0,
+		news_count: 10
+	},
+	{
+		cover: '/static/demo2ima.jpg',
+		title: '话题名称',
+		desc: '话题描述',
+		today_count: 0,
+		news_count: 10
+	},
+	{
+		cover: '/static/demo1ima.jpg',
+		title: '话题名称',
+		desc: '话题描述',
+		today_count: 0,
+		news_count: 10
+	},
+	{
+		cover: '/static/demo2ima.jpg',
+		title: '话题名称',
+		desc: '话题描述',
+		today_count: 0,
+		news_count: 10
+	}
+];
+const demo3 = [
+	{
+		avatar: '/static/lxg.jpg',
+		username: '用户1',
+		age: 21,
+		sex: 0,
+		isFollow: false
+	},
+	{
+		avatar: '/static/lxg.jpg',
+		username: '用户2',
+		age: 21,
+		sex: 1,
+		isFollow: true
+	}
+];
 import commonList from '@/components/common/common-list.vue';
+import topicList from '@/components/news/topic-list.vue';
+import userList from '@/components/user-list/user-list.vue';
 export default {
 	components: {
-		commonList
+		commonList,
+		topicList,
+		userList
 	},
 	data() {
 		return {
 			list: ['uni-app', 'c#', 'python', 'JAVA', 'photoshop', '这是一段很长的文本'],
 			searchtext: '',
-			searchList: []
+			searchList: [],
+			// 当前搜索类型
+			type: 'post'
 		};
 	},
 	// 用户输入内容时候
 	onNavigationBarSearchInputChanged(e) {
 		this.searchtext = e.text;
-		
 	},
 	// 点击了自定义按钮时候
 	onNavigationBarButtonTap(e) {
@@ -164,11 +227,37 @@ export default {
 			this.searEvent();
 		}
 	},
+	onLoad(type) {
+		if (!type.type) return;
+		this.type = type.type;
+		let pageTitle = '帖子';
+		switch (this.type) {
+			case 'post':
+				pageTitle = '帖子';
+				break;
+			case 'topic':
+				pageTitle = '话题';
+				break;
+			case 'user':
+				pageTitle = '用户';
+				break;
+		}
+		// 修改搜索占位
+		// #ifdef APP-PLUS
+		let currentWebview = this.$mp.page.$getAppWebview();
+		let tn = currentWebview.getStyle().titleNView;
+		// console.log(tn)
+		tn.searchInput.placeholder = '搜索' + pageTitle;
+		currentWebview.setStyle({
+			titleNView: tn
+		});
+		// #endif
+	},
 	methods: {
 		// 点击历史记录
-		clickSearchHistory(text){
-			this.searchtext =  text
-			this.searEvent()
+		clickSearchHistory(text) {
+			this.searchtext = text;
+			this.searEvent();
 		},
 		searEvent() {
 			// 收起键盘
@@ -180,7 +269,18 @@ export default {
 				complete: () => {
 					// 模拟获取数据
 					setTimeout(() => {
-						this.searchList = demo;
+						switch (this.type) {
+							case 'post':
+								this.searchList = demo;
+								break;
+							case 'topic':
+								this.searchList = demo2;
+								break;
+							case 'user':
+								this.searchList = demo3;
+								break;
+						}
+
 						uni.hideLoading();
 					}, 2000);
 				}

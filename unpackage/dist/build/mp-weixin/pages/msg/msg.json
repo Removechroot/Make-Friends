@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "消息列表",
+  "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor": "#FF4A6A",
+  "usingComponents": {
+    "msg": "/components/msg/msg",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "nothing": "/components/common/nothing"
+  }
+}

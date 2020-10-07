@@ -1,0 +1,57 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/news/news",
+    "pages/msg/msg",
+    "pages/my/my",
+    "pages/search/search",
+    "pages/add-input/add-input",
+    "pages/topic-cate/topic-cate",
+    "pages/topic-detail/topic-detail",
+    "pages/user-list/user-list",
+    "pages/user-chat/user-chat"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "首页"
+  },
+  "tabBar": {
+    "color": "#333333",
+    "selectedColor": "#fc5c82",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "./static/Tabimg/Dt-1.png",
+        "selectedIconPath": "static/Tabimg/Dt-0.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/news/news",
+        "iconPath": "./static/Tabimg/Fx-1.png",
+        "selectedIconPath": "static/Tabimg/Fx-0.png",
+        "text": "动态"
+      },
+      {
+        "pagePath": "pages/msg/msg",
+        "iconPath": "./static/Tabimg/XX-1.png",
+        "selectedIconPath": "static/Tabimg/XX-0.png",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "./static/Tabimg/my-1.png",
+        "selectedIconPath": "static/Tabimg/my-0.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "divider": "/components/common/divider",
+    "nothing": "/components/common/nothing"
+  },
+  "sitemapLocation": "sitemap.json"
+}

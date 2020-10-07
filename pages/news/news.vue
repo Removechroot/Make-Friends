@@ -36,7 +36,7 @@
 					<hot-cart :hotCart="hotlist" @more="more"></hot-cart>
 					<!-- 搜索框 -->
 					<view class="p-2">
-						<view class="flex rounded bg-light align-center justify-center py-2 text-secondary" style="height: 30rpx;">
+						<view class="flex rounded bg-light align-center justify-center py-2 text-secondary" style="height: 30rpx;" @click="OpenSeach">
 							<text class="iconfont icon-sousuo mr-2"></text>
 							<text>搜索话题</text>
 						</view>
@@ -245,6 +245,12 @@ export default {
 			uni.navigateTo({
 				url: '../topic-cate/topic-cate'
 			});
+		},
+		// 打开搜索页
+		OpenSeach(){
+			uni.navigateTo({
+				url:'../search/search?type=topic'
+			})
 		}
 	}
 };

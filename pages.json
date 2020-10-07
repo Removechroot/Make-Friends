@@ -82,6 +82,17 @@
 		{
 			"path": "pages/my/my",
 			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "个人中心",
+				"backgroundColor": "#333333",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "menu",
+							"color": "#333333"
+						}]
+					}
+				},
 				"mp-weixin": {
 					"navigationBarBackgroundColor": "#FF4A6A"
 
@@ -152,6 +163,99 @@
 						}]
 					}
 				}
+			}
+		}, { 
+			"path": "pages/user-list/user-list",
+			"style": {
+				"app-plus": {
+					// 动画效果
+					"animationType": "slide-in-left",
+					// App端导航栏配置
+					"titleNView": {
+						"autoBackButton": false,
+						// 搜索框配置
+						"searchInput": {
+							"align": "center",
+							"backgroundColor": "#f5f4f2",
+							"borderRadius": "4px",
+							"disabled": true,
+							"placeholder": "搜索用户",
+							"placeholderColor": "#6D6c67"
+						},
+						"buttons": [{
+								"color": "#333",
+								"colorPressed": "#FD597c",
+								"float": "right",
+								"fontSize": "15px",
+								"text": "取消"
+							}
+
+						]
+					}
+				}
+			}
+		}, {
+			"path": "pages/user-chat/user-chat",
+			"style": {
+				"mp-weixin": {
+					"navigationBarBackgroundColor": "#FF4A6A"
+
+				},
+				
+				"app-plus": {
+					
+					"bounce": "none",
+					"titleNView": {
+						"titleColor":"#333333",
+						"titleText":"正在与可爱面包聊天",
+						"backButton": {
+							"color": "#333333"
+						},
+						"buttons": [{
+
+							"color": "#333",
+							"colorPressed": "#FD597c",
+							"float": "right",
+							"fontSize": "25px",
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue60b"
+
+						}]
+					}
+
+				}
+			}
+		}, {
+			"path": "pages/detail/detail",
+			"style": {
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#333333",
+						"backButton": {
+							"color": "#333"
+						},
+						"buttons": [{
+							"type": "menu",
+							"float": "right",
+							"color": "#333"
+						}]
+					}
+				}
+			}
+		}, {
+			"path": "pages/user-set/user-set",
+			"style": {
+				"navigationBarTitleText": "设置",
+			"app-plus":{
+				"titleNView":{
+					"titleColor":"#333333",
+					"backButton":{
+						"color":"#333333"
+					}
+				}
+			}
+
+
 			}
 		}
 	],
