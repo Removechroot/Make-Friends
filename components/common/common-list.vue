@@ -1,6 +1,6 @@
 <template>
 	<!-- 首页卡片 -->
-	<view class="p-2" >
+	<view class="p-2 animate__animated animate__fast animate__fadeIn" >
 		<!-- 头像文字与关注 -->
 		<view class="flex align-center justify-between">
 			<view class="flex justify-center align-center img">

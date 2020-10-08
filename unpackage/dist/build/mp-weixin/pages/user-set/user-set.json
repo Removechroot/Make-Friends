@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "设置",
+  "usingComponents": {
+    "list-item": "/components/uni-ui/list-item/list-item"
+  }
+}

@@ -1,6 +1,7 @@
 {
   "navigationBarBackgroundColor": "#FF4A6A",
   "usingComponents": {
-    "user-chat": "/components/user-chat/user-chat"
+    "user-chat": "/components/user-chat/user-chat",
+    "botton-btn": "/components/common/botton-btn"
   }
 }
