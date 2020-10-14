@@ -40,11 +40,11 @@
 							<text class="iconfont icon-sousuo mr-2"></text>
 							<text>搜索话题</text>
 						</view>
-					</view>
+					</view> 
 					<!-- 轮播图 -->
 					<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" class="px-2 pb-2">
-						<swiper-item v-for="item in 3" :key="item">
-							<image src="../../static/demo1ima.jpg" mode="widthFix" class="rounded w-100" style="height: 300px;"></image>
+						<swiper-item v-for="(item,index) in swiperimglist" :key="index">
+							<image :src="item.Url" mode="widthFix" class="rounded w-100" style="height: 300px;"></image>
 						</swiper-item>
 					</swiper>
 					<!-- 最近更新 -->
@@ -64,68 +64,6 @@
 </template>
 
 <script>
-const demo = [
-	{
-		username: '罗三岁小可爱',
-		userpic: '../../static/xk.jpg',
-		newstime: '2020-20-20 下午4:32',
-		isFollow: true,
-		title: '震惊...我居然舔了两口猫屁股',
-		titlepic: '../../static/mpg.jpg',
-		support: {
-			type: '',
-			support_count: '999+',
-			unsupport_count: 2
-		},
-		comment_count: 2,
-		share_name: 2
-	},
-	{
-		username: '虾老板',
-		userpic: '../../static/xia.jpg',
-		newstime: '2020-20-20 下午4:32',
-		isFollow: true,
-		title: '我喜欢了一个30岁的女人...居然让我....',
-		titlepic: '',
-		support: {
-			type: 'unsupport',
-			support_count: 0,
-			unsupport_count: '999+'
-		},
-		comment_count: 2,
-		share_name: 2
-	},
-	{
-		username: '虾老板',
-		userpic: '../../static/xia.jpg',
-		newstime: '2020-20-20 下午4:32',
-		isFollow: true,
-		title: '我喜欢了一个30岁的女人...居然让我....',
-		titlepic: '',
-		support: {
-			type: 'unsupport',
-			support_count: 0,
-			unsupport_count: '999+'
-		},
-		comment_count: 2,
-		share_name: 2
-	},
-	{
-		username: '虾老板',
-		userpic: '../../static/xia.jpg',
-		newstime: '2020-20-20 下午4:32',
-		isFollow: true,
-		title: '我喜欢了一个30岁的女人...居然让我....',
-		titlepic: '',
-		support: {
-			type: 'unsupport',
-			support_count: 0,
-			unsupport_count: '999+'
-		},
-		comment_count: 2,
-		share_name: 2
-	}
-];
 import uniNavBar from '@/components/uni-ui/uni-nav-bar/uni-nav-bar.vue';
 import CommonList from '@/components/common/common-list.vue';
 import loadMore from '@/components/common/load-more.vue';
@@ -154,47 +92,45 @@ export default {
 			list: [],
 			loadmore: '上拉加载更多',
 			hotlist: [{ name: '关注' }, { name: '话题' }, { name: '热门' }, { name: '鬼畜' }, { name: '快落' }, { name: '肥宅' }],
-			topicList: [
-				{
-					cover: '../../static/demo1ima.jpg',
-					title: '话题名称',
-					desc: '话题描述',
-					today_count: 0,
-					news_count: 10
-				},
-				{
-					cover: '../../static/demo2ima.jpg',
-					title: '话题名称',
-					desc: '话题描述',
-					today_count: 0,
-					news_count: 10
-				},
-				{
-					cover: '../../static/demo1ima.jpg',
-					title: '话题名称',
-					desc: '话题描述',
-					today_count: 0,
-					news_count: 10
-				},
-				{
-					cover: '../../static/demo2ima.jpg',
-					title: '话题名称',
-					desc: '话题描述',
-					today_count: 0,
-					news_count: 10
-				}
-			]
+			topicList:[],
+			swiperimglist:[]
 		};
 	},
 	onLoad() {
 		let getwindows = uni.getSystemInfoSync();
 		this.windowHeight = getwindows.windowHeight - getwindows.statusBarHeight - 44;
-		this.list = demo;
+
+		this.GetData()
 	},
 	methods: {
+		async GetData(){
+			// 获取已关注数据
+			await uniCloud.callFunction({
+				name:"gettablelist",
+				success: (res) => {
+					let result = res.result.data
+					this.list = result;
+				}
+			})
+			// 获取话题列表
+			await uniCloud.callFunction({
+				name:"GettopicList",
+				success: (res) => {
+					let result = res.result.data
+					this.topicList = result
+				}
+			})
+			//获取幻灯片
+			await uniCloud.callFunction({
+				name:"Getswiperimglist",
+				success: (res) => {
+					let result = res.result.data
+					this.swiperimglist = result
+				}
+			})
+		},
 		// 打开发布页面
 		openAddinput() {
-			console.log('123');
 			uni.navigateTo({
 				url: '../add-input/add-input'
 			});
@@ -206,7 +142,6 @@ export default {
 			this.tabIndex = index;
 		},
 		type(type) {
-			console.log(type);
 			// 如果是首次顶
 			let item = this.list[type.index];
 			let msg = type.type === 'support' ? '顶成功' : '踩成功';

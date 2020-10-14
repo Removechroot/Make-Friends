@@ -13,7 +13,7 @@
 		<!-- 图片上传处理模块 -->
 		<uni-upload-image v-show="show" :list="imageList" @change="changeimages" ref="uploadImage"></uni-upload-image>
 		<!-- 底部操作 -->
-		<view class="bg-white fixed-bottom flex align-center border-top" style="height: 85rpx;">
+		<view class="bg-white fixed-bottom flex align-center border-top" style="height: 120rpx;">
 			<view class="iconfont icon-caidan  foor-btn"></view>
 			<view class="iconfont icon-huati foor-btn"></view>
 			<view class="iconfont icon-tupian foor-btn" hover-class="text-main" @click="iconClickEvent('uploadImage')"></view>
@@ -42,6 +42,7 @@ export default {
 			imageList: [],
 			// 是不是已经弹出过提示框
 			showback: false,
+			result: ''
 		};
 	},
 	computed: {
@@ -68,6 +69,7 @@ export default {
 			}
 		});
 	},
+
 	methods: {
 		changeimages(e) {
 			this.imageList = e;
@@ -122,28 +124,65 @@ export default {
 					break;
 			}
 		},
-		SendDynamic() {
-			let obj = {
-				username: '临时发炎用户',
-				userpic: this.imageList[0].length >= 0 ?  '../../static/timg.jpg' : this.imageList[0],
-				newstime: '2020-20-20 下午4:32',
-				isFollow: false,
-				title: this.content,
-				titlepic: this.imageList[0].length >= 0 ? this.imageList[0] : '../../static/u=1465454355,109973978&fm=26&gp=0.jpg',
-				support: {
-					type: '',
-					support_count: 999,
-					unsupport_count: 222
-				},
-				comment_count: 2,
-				share_name: 2
-			}; 
-			uni.setStorage({
-				key:"addlist",
-				data:obj
-			})
-uni.navigateBack()
+		async SendDynamic() {
+			if (this.imageList.length > 0) {
+				await uniCloud
+					.uploadFile({
+						cloudPath: `images/${Date.now()}.jpg`,
+						filePath: this.imageList[0]
+					})
+					.then(res => {
+						if (!res.success) return;
+						this.result = res.fileID;
+					});
+			} else {
+				this.result = "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg"
+			}
+			await uniCloud.callFunction({
+				name: 'add-input', 
+				data: {
+					username: Date.now(),
+					userpic: this.result,
+					newstime: Date.now(),
+					isFollow: false,
+					title: this.content,
+					titlepic: this.result,
+					support: {
+						type: '',
+						support_count: 0,
+						unsupport_count: 0
+					},
+					comment_count: 0,
+					share_name: 0
+				}
+			});
 
+			// let obj = {
+			// 	username: '临时发炎用户',
+			// 	userpic: this.imageList[0].length >= 0 ?  '../../static/timg.jpg' : this.imageList[0],
+			// 	newstime: '2020-20-20 下午4:32',
+			// 	isFollow: false,
+			// 	title: this.content,
+			// 	titlepic: this.imageList[0].length >= 0 ? this.imageList[0] : '../../static/u=1465454355,109973978&fm=26&gp=0.jpg',
+			// 	support: {
+			// 		type: '',
+			// 		support_count: 999,
+			// 		unsupport_count: 222
+			// 	},
+			// 	comment_count: 2,
+			// 	share_name: 2
+			// };
+			// uni.setStorage({
+			// 	key:"addlist",
+			// 	data:obj
+			// })
+			// uni.navigateBack();
+			// uni.navigateTo({
+			// 	url:"../home/index"
+			// })
+			uni.redirectTo({
+				url: '../home/index'
+			});
 		}
 	}
 };

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "common-list": "/components/common/common-list",
+    "botton-btn": "/components/common/botton-btn",
+    "more-share": "/components/common/more-share"
+  }
+}

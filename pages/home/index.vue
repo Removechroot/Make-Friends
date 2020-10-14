@@ -16,67 +16,43 @@
 
 		<!-- 滑动视图 -->
 		<swiper :duration="150" :current="tabIndex" @change="onchange" :style="'height:' + windowHeight + 'px'">
-			<swiper-item v-for="(item, index) in newsList" :key="item.id">
+			<swiper-item v-for="(item, index) in newsList" :key="index">
 				<scroll-view scroll-y :style="'height:' + windowHeight + 'px'" @scrolltolower="loadmore(index)">
 					<template v-if="item.list.length > 0">
-					
-					<!-- 内容渲染 -->
-					<block v-for="(item2, index2) in item.list" :key="index2">
-						<common-list :item="item2" :index="index2" @Follow="Follow" @type="type"></common-list>
-						<!-- 全局分割线 -->
-						<divider></divider>
-					</block>
-					<!-- 上拉加载模块 -->
-					<load-more :loadmore="item.loadmore"></load-more>
-					</template>
+						<!-- 内容渲染 -->
+						<block v-for="(item2, index2) in item.list" :key="index2">
+							<common-list :item="item2" :index="index2" @Follow="Follow" @type="type"></common-list>
+							<!-- 全局分割线 -->
+							<divider></divider>
+						</block>
+						<!-- 上拉加载模块 -->
+						<!-- <load-more :loadmore="item.loadmore"></load-more> -->
+						<template v-if="item.list.length >2">
+						<uni-load-more :status="status"></uni-load-more>
+						</template>
+					</template> 
 					<template v-else>
 						<nothing></nothing>
 					</template>
-				</scroll-view>
+				</scroll-view> 
 			</swiper-item>
 		</swiper>
 	</view>
 </template>
- 
+
 <script>
-	const demo = [{
-							username: '罗三岁小可爱',
-							userpic: '../../static/xk.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '震惊...我居然舔了两口猫屁股',
-							titlepic: '../../static/mpg.jpg',
-							support: {
-								type: '',
-								support_count: '999+',
-								unsupport_count: 2
-							},
-							comment_count: 2,
-							share_name: 2
-						},{
-							username: '虾老板',
-							userpic: '../../static/xia.jpg',
-							newstime: '2020-20-20 下午4:32',
-							isFollow: false,
-							title: '我喜欢了一个30岁的女人...居然让我....',
-							titlepic: '',
-							support: {
-								type: 'unsupport',
-								support_count: 0,
-								unsupport_count: '999+'
-							},
-							comment_count: 2,
-							share_name: 2
-						}]
 import commonList from '@/components/common/common-list.vue';
-import loadMore from '@/components/common/load-more';
+// import loadMore from '@/components/common/load-more';
+import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 export default {
 	components: {
 		commonList,
-		loadMore
+		// loadMore
+		uniLoadMore
 	},
 	data() {
 		return {
+			tabltlist: [],
 			windowHeight: 0,
 			scrollInto: '',
 			tabIndex: 0,
@@ -114,65 +90,60 @@ export default {
 					id: 7
 				}
 			],
-			newsList: []
+			newsList: [],
+			page: 0,
+			total: 0,
+			arr: [],
+			status: 'more'
 		};
 	},
 	// 点击自定义按钮
-	onNavigationBarButtonTap(e){
-			uni.navigateTo({
-				url:"../add-input/add-input"
-			})
-		},
-	// 点击搜索文本框
-	onNavigationBarSearchInputClicked(){
+	onNavigationBarButtonTap(e) {
 		uni.navigateTo({
-			url:'../search/search?type=post'
-		})
+			url: '../add-input/add-input'
+		});
 	},
-	onPullDownRefresh(){
-			setTimeout(()=>{
-				this.getdata()
-				uni.stopPullDownRefresh()
-			},800)
+	// 点击搜索文本框
+	onNavigationBarSearchInputClicked() {
+		uni.navigateTo({
+			url: '../search/search?type=post'
+		});
+	},
+	onPullDownRefresh() {
+		setTimeout(() => {
+			this.getdata();
+			uni.stopPullDownRefresh();
+		}, 800);
 	},
 	onLoad() {
-		
-		//临时代码
-		uni.getStorage({
-			key:"addlist",
-			success:res=>{
-				let result = res.data
-				demo.unshift(result)
-			}
-			
-		})
-		
-		
-		
-		// 临时代码
-		
-		
-		
-		
-		
 		let getwindows = uni.getSystemInfoSync();
 		this.windowHeight = getwindows.windowHeight - uni.upx2px(102);
-		this.getData();
+
+		if (this.tabBars.length) {
+			this.getlist();
+		}
 	},
 	computed: {},
 	methods: {
-		getData() {
-			var arr = [];
+		async getlist() {
+			let res = await uniCloud.callFunction({
+				name: 'gettablelist',
+				data: {
+					page: this.page
+				}
+			});
 			for (let i = 0; i < this.tabBars.length; i++) {
-				let obj = {
-					// 1.上拉加载更多 2.加载中 3.没有更多数据
-					loadmore: '上拉加载更多',
+				this.arr.push({
 					list: []
-				};
-				if(i < 2 ) obj.list = demo
-				arr.push(obj);
+				});
 			}
-			this.newsList = arr;
+
+			this.newsList = this.arr;
+			if (res.success) {
+				this.arr[this.tabIndex].list = res.result.context.data;
+				this.newsList= this.arr
+				this.total = res.result.total;
+			}
 		},
 		Follow(index) {
 			this.list[index].isFollow = true;
@@ -213,24 +184,39 @@ export default {
 			if (this.tabIndex === index) return;
 			this.tabIndex = index;
 			this.scrollInto = 'tab_' + index;
+			this.getlist();
 		},
 		onchange(index) {
 			let { detail } = index;
 			this.changetTab(detail.current);
 		},
 		// 上拉加载更多
-		loadmore(index) {
-			// 拿到当前列表
-			let list = this.newsList[index];
-			if (list.loadmore !== '上拉加载更多') return;
-			// 修改当前列表加载状态
-			list.loadmore = '努力加载中...';
+		 loadmore(index) {
+			 //如果 不是上拉加载更多状态 允许进入
+			if (this.status !== 'more') return;
+			//如果 总条数相等 不允许进入
+			if(this.total === this.newsList[this.tabIndex].list.length) return this.status = "nomore"
+			// 设置加载中状态
+			this.status="loading"
+			// +1页码
+			this.page++
+			// 调用 云函数
+			uniCloud.callFunction({
+				name: 'gettablelist',
+				data: {
+					page: this.page
+				}
+			}).then(res=>{
+				if(res.success){
+					// list 为新值
+					let list = res.result.context.data
+					// 旧数据 与新数据合并
+					this.newsList[this.tabIndex].list=([...this.newsList[this.tabIndex].list,...list])
+					// 还原上拉加载更多
+					this.status = 'more' 
+				} 
+			})
 
-			// 模拟数据请求
-			setTimeout(() => {
-				list.list = [...list.list, ...list.list];
-				list.loadmore = '上拉加载更多';
-			}, 800);
 		}
 	}
 };
