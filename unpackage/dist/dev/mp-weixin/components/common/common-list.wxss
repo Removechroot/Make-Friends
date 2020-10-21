@@ -10,7 +10,14 @@
 .focus {
 	width: 90rpx;
 	height: 50rpx;
-	background-color: #ff4a6a;
+	background-color: #ff4a6ax;
+	color: #fff;
+	border-radius: 5px;
+}
+.nofocus {
+	width: 90rpx;
+	height: 50rpx;
+	background-color: #c0c0c0;
 	color: #fff;
 	border-radius: 5px;
 }

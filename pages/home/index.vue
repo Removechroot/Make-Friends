@@ -27,14 +27,14 @@
 						</block>
 						<!-- 上拉加载模块 -->
 						<!-- <load-more :loadmore="item.loadmore"></load-more> -->
-						<template v-if="item.list.length >2">
-						<uni-load-more :status="status"></uni-load-more>
+						<template v-if="item.list.length > 2">
+							<uni-load-more :status="status"></uni-load-more>
 						</template>
-					</template> 
+					</template>
 					<template v-else>
 						<nothing></nothing>
 					</template>
-				</scroll-view> 
+				</scroll-view>
 			</swiper-item>
 		</swiper>
 	</view>
@@ -44,6 +44,7 @@
 import commonList from '@/components/common/common-list.vue';
 // import loadMore from '@/components/common/load-more';
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+import GetNice from '../../util/GetNice.js';
 export default {
 	components: {
 		commonList,
@@ -120,12 +121,14 @@ export default {
 		this.windowHeight = getwindows.windowHeight - uni.upx2px(102);
 
 		if (this.tabBars.length) {
-			this.getlist();
+			this.GetData();
 		}
 	},
-	computed: {},
+	onTabItemTap(e) {
+		if (e.index !== 0) return; 
+	},
 	methods: {
-		async getlist() {
+		async GetData() {
 			let res = await uniCloud.callFunction({
 				name: 'gettablelist',
 				data: {
@@ -141,45 +144,37 @@ export default {
 			this.newsList = this.arr;
 			if (res.success) {
 				this.arr[this.tabIndex].list = res.result.context.data;
-				this.newsList= this.arr
+				this.newsList = this.arr;
 				this.total = res.result.total;
 			}
 		},
-		Follow(index) {
-			this.list[index].isFollow = true;
-			uni.showToast({
-				title: '关注成功'
-			});
+		Follow(data) {
+			let { id, type, index } = data;
+			let Uid = JSON.parse(uni.getStorageSync("UserInfo"))
+			uniCloud
+				.callFunction({
+					name: 'update',
+					data: {
+						type: 'isFollow',
+						id,
+						isFollow: type,
+					}
+				})
+				.then(res => {
+					if (res.result.status !== 0) return;
+					this.newsList[this.tabIndex].list[index].isFollow = type;
+					let msg = type === true ? '关注成功' : '取消关注';
+					uni.showToast({
+						title: msg
+					});
+				});
 		},
-		// 顶踩操作
+		//点赞操作
 		type(type) {
-			console.log(type);
-			// 如果是首次顶
-			let item = this.newsList[0].list[type.index];
-			let msg = type.type === 'support' ? '顶成功' : '踩成功';
-			if (item.support.type === '') {
-				console.log(1);
-				item.support.type = type.type;
-				item.support[type.type + '_count']++;
-				return;
-			}
-			// 如果之前顶了suppor
-			if (item.support.type === 'support' && type.type === 'unsupport') {
-				console.log(2);
-				item.support.support_count--;
-				item.support.unsupport_count++;
-			}
-			// 如果之前顶了unsuppor
-			if (item.support.type === 'unsupport' && type.type === 'support') {
-				console.log(3);
-				item.support.support_count++;
-				item.support.unsupport_count--;
-			}
-			item.support.type = type.type;
-			uni.showToast({
-				title: msg
-			});
+			let list = this.newsList[this.tabIndex].list[type.index];
+			GetNice.Nice(type, list);
 		},
+
 		changetTab(index) {
 			if (this.tabIndex === index) return;
 			this.tabIndex = index;
@@ -191,32 +186,33 @@ export default {
 			this.changetTab(detail.current);
 		},
 		// 上拉加载更多
-		 loadmore(index) {
-			 //如果 不是上拉加载更多状态 允许进入
+		loadmore(index) {
+			//如果 不是上拉加载更多状态 允许进入
 			if (this.status !== 'more') return;
 			//如果 总条数相等 不允许进入
-			if(this.total === this.newsList[this.tabIndex].list.length) return this.status = "nomore"
+			if (this.total === this.newsList[this.tabIndex].list.length) return (this.status = 'nomore');
 			// 设置加载中状态
-			this.status="loading"
+			this.status = 'loading';
 			// +1页码
-			this.page++
+			this.page++;
 			// 调用 云函数
-			uniCloud.callFunction({
-				name: 'gettablelist',
-				data: {
-					page: this.page
-				}
-			}).then(res=>{
-				if(res.success){
-					// list 为新值
-					let list = res.result.context.data
-					// 旧数据 与新数据合并
-					this.newsList[this.tabIndex].list=([...this.newsList[this.tabIndex].list,...list])
-					// 还原上拉加载更多
-					this.status = 'more' 
-				} 
-			})
-
+			uniCloud
+				.callFunction({
+					name: 'gettablelist', 
+					data: {
+						page: this.page
+					}
+				})
+				.then(res => {
+					if (res.success) {
+						// list 为新值
+						let list = res.result.context.data;
+						// 旧数据 与新数据合并
+						this.newsList[this.tabIndex].list = [...this.newsList[this.tabIndex].list, ...list];
+						// 还原上拉加载更多
+						this.status = 'more';
+					}
+				});
 		}
 	}
 };

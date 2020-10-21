@@ -42,7 +42,8 @@ export default {
 			imageList: [],
 			// 是不是已经弹出过提示框
 			showback: false,
-			result: ''
+			result: [],
+			UserInfo: {}
 		};
 	},
 	computed: {
@@ -124,65 +125,63 @@ export default {
 					break;
 			}
 		},
-		async SendDynamic() {
+		SendDynamic() {
+			uni.showToast({
+				title: '发布中',
+				icon: 'loading'
+			});
 			if (this.imageList.length > 0) {
-				await uniCloud
-					.uploadFile({
-						cloudPath: `images/${Date.now()}.jpg`,
-						filePath: this.imageList[0]
-					})
-					.then(res => {
-						if (!res.success) return;
-						this.result = res.fileID;
-					});
-			} else {
-				this.result = "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg"
-			}
-			await uniCloud.callFunction({
-				name: 'add-input', 
-				data: {
-					username: Date.now(),
-					userpic: this.result,
-					newstime: Date.now(),
-					isFollow: false,
-					title: this.content,
-					titlepic: this.result,
-					support: {
-						type: '',
-						support_count: 0,
-						unsupport_count: 0
-					},
-					comment_count: 0,
-					share_name: 0
+				for (let i = 0; i < this.imageList.length; i++) {
+					uniCloud
+						.uploadFile({
+							cloudPath: `images/${Date.now()}.jpg`,
+							filePath: this.imageList[i]
+						})
+						.then(res => {
+							if (!res.success) return;
+							this.result.push({
+								imgUrl: res.fileID
+							});
+							this.updatacloud();
+						});
 				}
-			});
-
-			// let obj = {
-			// 	username: '临时发炎用户',
-			// 	userpic: this.imageList[0].length >= 0 ?  '../../static/timg.jpg' : this.imageList[0],
-			// 	newstime: '2020-20-20 下午4:32',
-			// 	isFollow: false,
-			// 	title: this.content,
-			// 	titlepic: this.imageList[0].length >= 0 ? this.imageList[0] : '../../static/u=1465454355,109973978&fm=26&gp=0.jpg',
-			// 	support: {
-			// 		type: '',
-			// 		support_count: 999,
-			// 		unsupport_count: 222
-			// 	},
-			// 	comment_count: 2,
-			// 	share_name: 2
-			// };
-			// uni.setStorage({
-			// 	key:"addlist",
-			// 	data:obj
-			// })
-			// uni.navigateBack();
-			// uni.navigateTo({
-			// 	url:"../home/index"
-			// })
-			uni.redirectTo({
-				url: '../home/index'
-			});
+			} else {
+				this.updatacloud();
+			}
+		},
+		updatacloud() {
+			let UserInfo = JSON.parse(uni.getStorageSync('UserInfo'));
+			uniCloud
+				.callFunction({
+					name: 'add-input',
+					data: {
+						username: UserInfo.nickName,
+						userpic: UserInfo.avatarUrl.length > 0 ? UserInfo.avatarUrl : 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg',
+						newstime: Date.now(),
+						isFollow: false,
+						title: this.content,
+						titlepic: this.result.length > 0 ? this.result : [],
+						support: {
+							type: '',
+							support_count: 0,
+							unsupport_count: 0
+						},
+						comment_count: 0,
+						share_name: 0,
+						review: [],
+						Uid: this.UserInfo.Uid
+					}
+				})
+				.then(() => {
+					uni.showToast({
+						title: '发布成功',
+						success() {
+							uni.reLaunch({
+								url: '../home/index'
+							});
+						}
+					});
+				});
 		}
 	}
 };

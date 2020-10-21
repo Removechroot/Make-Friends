@@ -1,7 +1,7 @@
 {
   "navigationBarBackgroundColor": "#FF4A6A",
   "usingComponents": {
-    "common-list": "/components/common/common-list",
-    "load-more": "/components/common/load-more"
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
+    "common-list": "/components/common/common-list"
   }
 }

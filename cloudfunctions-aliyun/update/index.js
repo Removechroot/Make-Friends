@@ -1,27 +1,40 @@
 'use strict';
 const db = uniCloud.database()
 exports.main = async (event, context) => {
-	const collection = db.collection('unicloud-test')
-	const docList = await collection.limit(1).get();
+	const collection = db.collection('table-list')
+	const docList = await collection.get();
+
 	if (!docList.data || docList.data.length === 0) {
 		return {
 			status: -1,
-			msg: '集合unicloud-test内没有数据'
+			msg: '集合table-list内没有数据'
 		}
 	}
-	const res = await collection.doc(docList.data[0]._id).update(event);
+	if (event.type === "isFollow") {
+		var res = await collection.doc(event.id).update({
+			isFollow: event.isFollow
+		});
+	} else if (event.type === "typeManage") {
+		var res = await collection.doc(event.id).update({
+			support:event.support
+		});
+	}else if(event.type === "review"){
+		var res = await collection.doc(event.id).update({
+			review:event.review,
+			comment_count:event.comment_count
+		});
+	}
+
+	// 
 	if (res.updated === 1) {
-		let result = Object.assign({}, {
-			_id: docList.data[0]._id
-		}, event)
-		return {
+		return { 
 			status: 0,
-			msg: `集合第一条数据由${JSON.stringify(docList.data[0])}修改为${JSON.stringify(result)}`
+			msg: `修改成功`
 		}
 	} else {
 		return {
 			status: -1,
-			msg: `集合unicloud-test内没有数据`
+			msg: `修改失败`
 		}
 	}
 };

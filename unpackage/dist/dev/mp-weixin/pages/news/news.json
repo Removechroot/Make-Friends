@@ -1,9 +1,9 @@
 {
   "navigationBarBackgroundColor": "#FF4A6A",
   "usingComponents": {
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
     "uni-nav-bar": "/components/uni-ui/uni-nav-bar/uni-nav-bar",
     "common-list": "/components/common/common-list",
-    "load-more": "/components/common/load-more",
     "hot-cart": "/components/news/hotCart",
     "topic-list": "/components/news/topic-list"
   }

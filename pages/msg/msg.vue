@@ -100,7 +100,6 @@ export default {
 				name:"Getmsglist"
 			}).then(res=>{
 				this.list = res.result.data
-				console.log(res)
 			})
 		},
 		refres() {

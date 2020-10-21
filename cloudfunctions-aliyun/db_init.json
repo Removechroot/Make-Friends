@@ -1,38 +1,56 @@
 {
+
 	"table-list": { // 集合（表名）
 		"data": [ // 数据
 			{
 				"username": "测试账号",
 				"userpic": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/98883de0-093e-11eb-8a36-ebb87efcf8c0.jpg",
 				"newstime": "",
-				"isFollow": false,
+				"isFollow": [],
 				"title": "测试标题",
-				"titlepic": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg",
+				"titlepic": [{
+						"imgUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg"
+					},
+					{
+						"imgUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg"
+					},
+					{
+						"imgUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg"
+					}
+				],
 				"support": {
 					"type": "",
 					"support_count": 7,
 					"unsupport_count": 2
 				},
 				"comment_count": 2,
-				"share_name": 2
+				"share_name": 2,
+				"review": [{
+					"user_id": "",
+					"avatar": "",
+					"username": "",
+					"msg": "",
+					"type": "",
+					"create_time": ""
+
+				}]
 			}
 		],
-		 
+
 		"index": [{ // 索引
-		            "IndexName": "index_a", // 索引名称
-		            "MgoKeySchema": { // 索引规则
-		                "MgoIndexKeys": [{
-		                    "Name": "newstime", // 索引字段
-		                    "Direction": "1" // 索引方向，1：ASC-升序，-1：DESC-降序，2dsphere：地理位置
-		                }],
-		                "MgoIsUnique": true // 索引是否唯一
-		            }
-		        }]
-		    
+			"IndexName": "index_a", // 索引名称
+			"MgoKeySchema": { // 索引规则
+				"MgoIndexKeys": [{
+					"Name": "newstime", // 索引字段
+					"Direction": "1" // 索引方向，1：ASC-升序，-1：DESC-降序，2dsphere：地理位置
+				}],
+				"MgoIsUnique": true // 索引是否唯一
+			}
+		}]
+
 	},
 	"topicList": {
-		"data": [
-			{
+		"data": [{
 				"cover": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/98883de0-093e-11eb-8a36-ebb87efcf8c0.jpg",
 				"title": "话题名称",
 				"desc": "话题描述",
@@ -49,22 +67,20 @@
 
 		]
 	},
-	"swiperimglist":{
-		"data":[
-			{
-				"Url":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/6cd5a4f0-094b-11eb-8a36-ebb87efcf8c0.jpg"
+	"swiperimglist": {
+		"data": [{
+				"Url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/6cd5a4f0-094b-11eb-8a36-ebb87efcf8c0.jpg"
 			},
 			{
-				"Url":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/bc874170-094b-11eb-8a36-ebb87efcf8c0.jpg"
+				"Url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/bc874170-094b-11eb-8a36-ebb87efcf8c0.jpg"
 			},
 			{
-				"Url":"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/b6f1a8e0-094b-11eb-8bd0-2998ac5bbf7e.jpg"
+				"Url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/b6f1a8e0-094b-11eb-8bd0-2998ac5bbf7e.jpg"
 			}
 		]
 	},
-	"msgList":{
-		"data":[
-			{
+	"msgList": {
+		"data": [{
 				"avatar": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/98883de0-093e-11eb-8a36-ebb87efcf8c0.jpg",
 				"username": "虾老板",
 				"updata_time": "1601460630",
@@ -93,6 +109,110 @@
 				"noread": "1"
 			}
 		]
+	},
+	"uni-id-users": {
+		"data": [],
+		"index": [{
+			"IndexName": "username",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "username",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "mobile",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "mobile",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "email",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "email",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_openid.app-plus",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_openid.app-plus",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_openid.mp-weixin",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_openid.mp-weixin",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "wx_unionid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "wx_unionid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "ali_openid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "ali_openid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "my_invite_code",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "my_invite_code",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "inviter_uid",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "inviter_uid",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "invite_time",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "invite_time",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}, {
+			"IndexName": "role",
+			"MgoKeySchema": {
+				"MgoIndexKeys": [{
+					"Name": "role",
+					"Direction": "1"
+				}],
+				"MgoIsUnique": false
+			}
+		}]
 	}
-	
+
+
 }
