@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 <view hover-class="bg-light" data-event-opts="{{[['tap',[['click',['$event']]]]]}}" bindtap="__e"><view class="flex align-center py-3 px-4 justify-center"><text class="{{['iconfont',icon]}}"></text><text class="flex-1 px-1">{{title}}</text><slot></slot><text class="iconfont icon-jinru text-muted"></text></view></view>
+=======
+<view hover-class="bg-light"><view class="flex align-center py-3 px-4 justify-center"><text class="{{['iconfont',icon]}}"></text><text class="flex-1 px-1">{{title}}</text><text class="iconfont icon-jinru text-muted"></text></view></view>
+>>>>>>> origin/Cloud

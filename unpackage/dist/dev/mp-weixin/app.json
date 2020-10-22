@@ -9,7 +9,9 @@
     "pages/topic-cate/topic-cate",
     "pages/topic-detail/topic-detail",
     "pages/user-list/user-list",
-    "pages/user-chat/user-chat"
+    "pages/user-chat/user-chat",
+    "pages/detail/detail",
+    "pages/user-set/user-set"
   ],
   "subPackages": [],
   "window": {
@@ -53,5 +55,5 @@
     "divider": "/components/common/divider",
     "nothing": "/components/common/nothing"
   },
-  "sitemapLocation": "sitemap56.json"
+  "sitemapLocation": "sitemap25.json"
 }

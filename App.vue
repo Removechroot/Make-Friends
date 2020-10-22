@@ -1,6 +1,19 @@
 <script>
 	export default {
 		onLaunch: function() {
+			let token = uni.getStorageSync("uni_id_token")
+			uniCloud.callFunction({
+				name:"user-center",
+				data:{
+					action:"checkToken",
+					params:{
+						token
+					}
+				}
+			}).then(res=>{
+				if(res.result.code > 0)  return
+			})
+			
 			console.log('App Launch')
 			this.$U.onNetWork()
 		},

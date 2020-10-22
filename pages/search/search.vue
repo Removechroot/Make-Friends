@@ -1,11 +1,14 @@
 <template>
 	<view>
-		<template v-if="searchList.length === 0">
+		<template v-if="searchList.length === 0 ||  isShow">
 			<!-- 搜索历史 -->
 			<view class="py-2 font-md px-2">搜索历史</view>
 			<view class="flex flex-wrap">
 				<view class="border rounded border font mx-2 my-1 px-3 " hover-class="bg-light" v-for="item in list" :key="item" @click="clickSearchHistory(item)">{{ item }}</view>
 			</view>
+		</template>
+		<template v-if="isShow">
+			<nothing></nothing>
 		</template>
 
 		<template v-else>
@@ -214,7 +217,8 @@ export default {
 			searchtext: '',
 			searchList: [],
 			// 当前搜索类型
-			type: 'post'
+			type: 'post',
+			isShow:false
 		};
 	},
 	// 用户输入内容时候
@@ -268,21 +272,29 @@ export default {
 				mask: true,
 				complete: () => {
 					// 模拟获取数据
-					setTimeout(() => {
 						switch (this.type) {
 							case 'post':
-								this.searchList = demo;
+							uniCloud.callFunction({
+								name:"Getseach",
+								data:{
+									keyword:this.searchtext
+								}
+							}).then(res=>{
+								if(!res.result.status === 200) return 
+								if(res.result.res.data.length === 0 ) return this.isShow = true
+									this.searchList = res.result.res.data
+							})
+								// this.searchList = demo;
 								break;
-							case 'topic':
-								this.searchList = demo2;
-								break;
-							case 'user':
-								this.searchList = demo3;
-								break;
+							// case 'topic':
+							// 	this.searchList = demo2;
+							// 	break;
+							// case 'user':
+							// 	this.searchList = demo3;
+							// 	break;
 						}
-
+						this.searchList = []
 						uni.hideLoading();
-					}, 2000);
 				}
 			});
 		}

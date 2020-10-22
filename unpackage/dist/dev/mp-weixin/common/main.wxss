@@ -13,6 +13,19 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* uni官方css */
 @font-face {
 	font-family: uniicons;
@@ -1517,7 +1530,7 @@ radio-group label, checkbox-group label{
 /*每个页面公共css */
 /* 公共样式 */
 .bg-main{
-	background-color: #FF4A6A;
+	background-color: #FF4A6A!important;
 }
 .text-main{
 	color:#FF4A6A;

@@ -2,9 +2,12 @@
 	"pages": [{
 			"path": "pages/home/index",
 			"style": {
-				"enablePullDownRefresh": true,
 				"app-plus": {
-					"enablePullDownRefresh": true,
+					"pullToRefresh":{
+						"support":true
+						
+					},
+					"bounce":"none",
 					// App端导航栏配置
 					"titleNView": {
 						// 搜索框配置
