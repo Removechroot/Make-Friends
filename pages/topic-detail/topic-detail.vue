@@ -17,7 +17,7 @@
 		<!-- 列表 -->
 		<template v-if="listdata.length>0">
 		
-		<block v-for="(item, index) in listdata" :ket="index" v-if="listdata.length >0">
+		<block v-for="(item, index) in listdata" :ket="index">
 			<common-list :item="item" :index="index"></common-list>
 			<divider></divider>
 		</block>
@@ -34,44 +34,26 @@
 
 <script>
 const demo = [{
-						username: '罗三岁小可爱',
-						userpic: '../../static/xk.jpg',
-						newstime: '2020-20-20 下午4:32',
+						username: '测试账号',
+						userpic: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/bab00190-e3a6-4624-b380-a95a6436961a.jpg',
+						newstime: 1603279506555,
 						isFollow: false,
-						title: '震惊...我居然舔了两口猫屁股',
-						titlepic: '../../static/mpg.jpg',
+						title: '微信小程序版本可通过以下二维码扫码查看',
+						  titlepic: [
+						    {
+						      imgUrl: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/31477a10-144c-11eb-899d-733ae62bed2f.jpg"
+						    },
+						    {
+						      imgUrl: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/31477a10-144c-11eb-899d-733ae62bed2f.jpg"
+						    },
+						    {
+						      imgUrl: "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/31477a10-144c-11eb-899d-733ae62bed2f.jpg"
+						    }
+						  ],
 						support: {
 							type: '',
-							support_count: '999+',
+							support_count: 99,
 							unsupport_count: 2
-						},
-						comment_count: 2,
-						share_name: 2
-					},{
-						username: '虾老板',
-						userpic: '../../static/xia.jpg',
-						newstime: '2020-20-20 下午4:32',
-						isFollow: false,
-						title: '我喜欢了一个30岁的女人...居然让我....',
-						titlepic: '',
-						support: {
-							type: 'unsupport',
-							support_count: 0,
-							unsupport_count: '999+'
-						},
-						comment_count: 2,
-						share_name: 2
-					},{
-						username: '虾老板',
-						userpic: '../../static/xia.jpg',
-						newstime: '2020-20-20 下午4:32',
-						isFollow: false,
-						title: '我喜欢了一个30岁的女人...居然让我....',
-						titlepic: '',
-						support: {
-							type: 'unsupport',
-							support_count: 0,
-							unsupport_count: '999+'
 						},
 						comment_count: 2,
 						share_name: 2

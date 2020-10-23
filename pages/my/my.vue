@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- #ifdef APP-PLUS -->
+		<!-- #ifdef H5 -->
 		<view class="flex justify-center align-center flex-column">
 			<text class="mb-2">登录平台，使用更多功能</text>
 			<view class="bg-secondary flex justify-center align-center bg-success rounded-circle" style="width: 100rpx;height: 100rpx;">
@@ -74,99 +74,93 @@ export default {
 		});
 	},
 	onLoad() {
-		//获取uni_id_token
-		let res = uni.getStorageSync('uni_id_token');
-		// ？？？ 这里uniCloud 更改了this指向，解决方法未知
-		let that = this;
-		// 调用 checkToken 方法
-		uniCloud.callFunction({
-			name: 'user-center',
-			data: {
-				action: 'checkToken',
-				params: {
-					token: res
-				}
-			},
-			// 成功回调
-			success({ result }) {
-				if (result.code > 0) return;
-				that.islogin = true;
-				uni.setStorageSync('UserInfo',JSON.stringify({
-					avatarUrl:result.userInfo.userInfo.avatarUrl,
-					nickName:result.userInfo.userInfo.nickName,
-					Uid:result.uid 
-				}));
-				that.userInfo = result.userInfo.userInfo;
-			},
-			//失败回调
-			fail() {
-				that.islogin = false;
-				return
-			}
-		});
-	},
-	methods: {
-		loginByWeixin() {
-			if (this.islogin) return;
-			uni.showLoading({
-				title: '请稍后'
-			});
-			uni.login({
-				provider: 'weixin',
-				success: res => {
-					this.GetopenID(res.code);
-				}
-			});
-		},
-		getUserInfo(uid) {
-			let that = this;
-			uni.getUserInfo({
-				success: ({ userInfo }) => {
-					uniCloud.callFunction({
-						name: 'user-center',
-
-						data: {
-							action: 'pushuserinfo',
-							uid,
-							userInfo
-						},
-						success(res) {
-							if (!res.success) return;
-							uni.setStorageSync('UserInfo',JSON.stringify({
-								avatarUrl:res.result.data[0].userInfo.avatarUrl,
-								nickName:res.result.data[0].userInfo.nickName,
-								Uid:res.result.data[0]._id
-							}));
-							that.userInfo = res.result.data[0].userInfo;
-						}
-					});
-
-					this.islogin = true;
-				}
-			});
-		},
-		GetopenID(code) {
+		// #ifdef MP-WEIXIN
+		if (uni.getStorageSync('token')) {
+			let token = uni.getStorageSync('token');
 			uniCloud.callFunction({
 				name: 'user-center',
 				data: {
-					action: 'loginByWeixin',
+					action: 'checkToken',
 					params: {
-						code
+						token
 					}
 				},
-				success: res => {
-					if (res.result.code === 0) {
-						uni.setStorageSync('uni_id_token', res.result.token);
-						this.getUserInfo(res.result.uid);
+				success: ({ result }) => {
+					console.log(result);
+					if (result.code > 0) {
+						that.islogin = false;
 					}
-				},
-				fail() {
-					uni.uni.showToast({
-						title: '用户取消登录'
+					this.userInfo = result.userInfo.userInfo;
+					this.islogin = true;
+				}
+			});
+		} else {
+			this.loginByWeixin();
+		}
+		// #endif
+	},
+	methods: {
+		loginByWeixin() {
+			uni.showLoading({
+				title: '登录中！'
+			});
+			if (this.islogin) return;
+			// //#ifdef H5
+			// uni.login({
+			// 	provider: 'weixin',
+			// 	success: function(loginRes) {
+			// 		console.log(loginRes.authResult);
+			// 	}
+			// });
+			// //#endif
+
+			//#ifdef MP-WEIXIN || H5
+			uni.getUserInfo({
+				success: ({ userInfo }) => {
+					this.userInfo = userInfo;
+					this.getOpenID();
+				}
+			});
+			//#endif
+		},
+		getOpenID() {
+			uni.login({
+				success: ({ code }) => {
+					uniCloud.callFunction({
+						name: 'user-center',
+						data: {
+							action: 'loginByWeixin',
+							params: {
+								code
+							}
+						},
+						success: res => {
+							if (res.result.code > 0)
+								return uni.showModal({
+									title: '登录失败请重试',
+									showCancel: false
+								});
+							uni.setStorageSync('token', res.result.token);
+							uniCloud.callFunction({
+								name: 'user-center',
+								data: {
+									uid: res.result.uid,
+									action: 'pushuserinfo',
+									userInfo: this.userInfo
+								}
+							});
+							this.islogin = true;
+						},
+						fail() {
+							uni.showModal({
+								title: '登录失败请重试',
+								showCancel: false
+							});
+						},
+						complete: () => {
+							uni.hideLoading();
+						}
 					});
-				},
-				complete() {
-					uni.hideLoading();
 				}
 			});
 		}

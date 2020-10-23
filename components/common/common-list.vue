@@ -1,10 +1,6 @@
 <template>
 	<!-- 首页卡片 -->
-<<<<<<< HEAD
 	<view class="p-2 animate__animated animate__fast animate__fadeIn" >
-=======
-	<view class="p-2">
->>>>>>> origin/Cloud
 		<!-- 头像文字与关注 -->
 		<view class="flex align-center justify-between">
 			<view class="flex justify-center align-center img">
@@ -111,11 +107,12 @@ export default {
 		},
 		openDtail() {
 			if (this.isdetail) return;
-			let  obj = {
-				"cid":this.item._id
-			}
+			// let  obj = {
+			// 	"cid":this.item._id
+			// }
+			// console.log(this.item._id)
 			uni.navigateTo({
-				url: `../../pages/detail/detail?detail=${JSON.stringify(obj)}`
+				url: `../../pages/detail/detail?detail=${this.item._id}`
 			}); 
 		},
 		// 顶踩操作

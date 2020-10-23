@@ -15,7 +15,7 @@
   ],
   "subPackages": [],
   "window": {
-    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarBackgroundColor": "#FF4A6A",
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "首页"
   },
@@ -55,5 +55,5 @@
     "divider": "/components/common/divider",
     "nothing": "/components/common/nothing"
   },
-  "sitemapLocation": "sitemap25.json"
+  "sitemapLocation": "sitemap4.json"
 }

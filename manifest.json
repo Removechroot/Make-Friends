@@ -60,9 +60,10 @@
         "setting" : {
             "urlCheck" : false,
             "es6" : true,
-            "minified" : false
+            "minified" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "appid" : "wx7f1b21e8d33de623"
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -75,5 +76,10 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "history"
+        }
     }
 }

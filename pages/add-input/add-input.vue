@@ -1,5 +1,7 @@
 <template>
 	<view>
+		<!-- #ifndef MP-WEIXIN -->
+
 		<!-- 自定义导航模块 -->
 		<uni-nav-bar left-icon="back" fixed status-bar :border="false" @goblack="goblack">
 			<view class="flex align-center justify-center w-100">
@@ -7,7 +9,7 @@
 				<text class="iconfont icon-icon-test m-0"></text>
 			</view>
 		</uni-nav-bar>
-
+		<!-- #endif -->
 		<!-- 文本域 -->
 		<textarea v-model="content" placeholder="说一句话试试~" class="uni-textarea  mt-3 px-3" />
 		<!-- 图片上传处理模块 -->
@@ -43,7 +45,7 @@ export default {
 			// 是不是已经弹出过提示框
 			showback: false,
 			result: [],
-			UserInfo: {}
+			userInfo: {}
 		};
 	},
 	computed: {
@@ -61,6 +63,43 @@ export default {
 	},
 	// 页面加载时候自动获取本地存储
 	onLoad() {
+		let that = this;
+		if (uni.getStorageSync('token')) {
+			let token = uni.getStorageSync('token');
+			uniCloud.callFunction({
+				name: 'user-center',
+				data: {
+					action: 'checkToken',
+					params: {
+						token
+					}
+				},
+				success({ result }) {
+					if (result.code > 0)
+						return uni.showModal({
+							title: '未登录或者登录过期',
+							showCancel: false
+						});
+					that.userInfo = result.userInfo.userInfo;
+					that.uid = result.userInfo._id;
+				}
+			});
+		} else {
+			uni.showModal({
+				content: '用户未登录正在使用临时登录凭证',
+				showCancel: false
+			});
+			that.userInfo = {
+				avatarUrl: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg',
+				city: '',
+				country: 'Other',
+				gender: 1,
+				language: 'zh_CN',
+				nickName: '测试用户',
+				province: 'Southern'
+			};
+			that.uid = 'AHJSBDJKHASDJKHASJDHsahdhjasjasdj';
+		}
 		uni.getStorage({
 			key: 'add_input',
 			success: res => {
@@ -150,13 +189,15 @@ export default {
 			}
 		},
 		updatacloud() {
-			let UserInfo = JSON.parse(uni.getStorageSync('UserInfo'));
 			uniCloud
 				.callFunction({
 					name: 'add-input',
 					data: {
-						username: UserInfo.nickName,
-						userpic: UserInfo.avatarUrl.length > 0 ? UserInfo.avatarUrl : 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg',
+						username: this.userInfo.nickName,
+						userpic:
+							this.userInfo.avatarUrl.length > 0
+								? this.userInfo.avatarUrl
+								: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-mf-ser1/5c225bb0-093e-11eb-b244-a9f5e5565f30.jpg',
 						newstime: Date.now(),
 						isFollow: false,
 						title: this.content,
@@ -169,7 +210,7 @@ export default {
 						comment_count: 0,
 						share_name: 0,
 						review: [],
-						Uid: this.UserInfo.Uid
+						Uid: this.uid
 					}
 				})
 				.then(() => {

@@ -3,11 +3,11 @@
 			"path": "pages/home/index",
 			"style": {
 				"app-plus": {
-					"pullToRefresh":{
-						"support":true
-						
+					"pullToRefresh": {
+						"support": true
+
 					},
-					"bounce":"none",
+					"bounce": "none",
 					// App端导航栏配置
 					"titleNView": {
 						// 搜索框配置
@@ -138,13 +138,10 @@
 		}, {
 			"path": "pages/add-input/add-input",
 			"style": {
+				"navigationBarTitleText": "发布消息",
 				"app-plus": {
 					"titleNView": false
 
-
-				},
-				"mp-weixin": {
-					"navigationBarBackgroundColor": "#FF4A6A"
 
 				}
 			}
@@ -167,7 +164,7 @@
 					}
 				}
 			}
-		}, { 
+		}, {
 			"path": "pages/user-list/user-list",
 			"style": {
 				"app-plus": {
@@ -200,17 +197,12 @@
 		}, {
 			"path": "pages/user-chat/user-chat",
 			"style": {
-				"mp-weixin": {
-					"navigationBarBackgroundColor": "#FF4A6A"
-
-				},
-				
 				"app-plus": {
-					
+
 					"bounce": "none",
 					"titleNView": {
-						"titleColor":"#333333",
-						"titleText":"正在与可爱面包聊天",
+						"titleColor": "#333333",
+						"titleText": "正在与可爱面包聊天",
 						"backButton": {
 							"color": "#333333"
 						},
@@ -249,14 +241,14 @@
 			"path": "pages/user-set/user-set",
 			"style": {
 				"navigationBarTitleText": "设置",
-			"app-plus":{
-				"titleNView":{
-					"titleColor":"#333333",
-					"backButton":{
-						"color":"#333333"
+				"app-plus": {
+					"titleNView": {
+						"titleColor": "#333333",
+						"backButton": {
+							"color": "#333333"
+						}
 					}
 				}
-			}
 
 
 			}
@@ -265,7 +257,11 @@
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "首页"
+		"navigationBarTitleText": "首页",
+		"mp-weixin": {
+			"navigationBarBackgroundColor": "#FF4A6A"
+
+		}
 	},
 
 	"tabBar": {

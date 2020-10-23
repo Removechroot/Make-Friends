@@ -57,7 +57,9 @@
 
 					<!-- 话题列表组件 -->
 
-					<block v-for="(item, index) in topicList" :key="index"><topic-list :item="item" :index="index"></topic-list></block>
+					<block v-for="(item, index) in topicList" :key="index">
+						<topic-list :item="item" :index="index"></topic-list>
+					</block>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -68,7 +70,6 @@
 import uniNavBar from '@/components/uni-ui/uni-nav-bar/uni-nav-bar.vue';
 import CommonList from '@/components/common/common-list.vue';
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
-// import loadMore from '@/components/common/load-more.vue';
 import hotCart from '@/components/news/hotCart';
 import topicList from '@/components/news/topic-list.vue';
 import GetNice from '../../util/GetNice.js';
@@ -104,7 +105,6 @@ export default {
 		};
 	},
 	onLoad() {
-		this.Uid = JSON.parse(uni.getStorageSync('UserInfo')) 
 		let getwindows = uni.getSystemInfoSync();
 		this.windowHeight = getwindows.windowHeight - getwindows.statusBarHeight - 44;
 		this.getlist();
@@ -126,6 +126,7 @@ export default {
 				})
 				.then(res => {
 					let result = res.result.data;
+					console.log(result)
 					this.topicList = result;
 				});
 			//获取幻灯片
@@ -193,31 +194,6 @@ export default {
 		type(type) {
 			let list = this.list[type.index];
 			GetNice.Nice(type,list) 
-			
-			
-			
-			// // 如果是首次顶
-			// let item = this.list[type.index];
-			// let msg = type.type === 'support' ? '顶成功' : '踩成功';
-			// if (item.support.type === '') {
-			// 	item.support.type = type.type;
-			// 	item.support[type.type + '_count']++;
-			// 	return;
-			// }
-			// // 如果之前顶了suppor
-			// if (item.support.type === 'support' && type.type === 'unsupport') {
-			// 	item.support.support_count--;
-			// 	item.support.unsupport_count++;
-			// }
-			// // 如果之前顶了unsuppor
-			// if (item.support.type === 'unsupport' && type.type === 'support') {
-			// 	item.support.support_count++;
-			// 	item.support.unsupport_count--;
-			// }
-			// item.support.type = type.type; 
-			// uni.showToast({
-			// 	title: msg
-			// });
 		},
 		loadmoreEvent() {
 			if (this.status !== 'more') return;

@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<template v-if="list.length > 0">
+		<template v-if="!isshow">
 			<block v-for="(item, index) in list" :key="index"><msg :item="item" :index="index"></msg></block>
 		</template>
-		<template v-else>
+		<template v-if="isshow">
 			<nothing><text>还没人给你发消息...</text></nothing>
 		</template>
 
@@ -32,45 +32,8 @@ export default {
 	},
 	data() {
 		return {
-			list:[]
-			// list: [
-			// 	{
-			// 		avatar: '../../static/xia.jpg',
-			// 		username: '虾老板',
-			// 		updata_time: '1601460630',
-			// 		content: '今晚来唱歌',
-			// 		noread: '1'
-			// 	},
-			// 	{
-			// 		avatar: '../../static/xk.jpg',
-			// 		username: '罗三岁',
-			// 		updata_time: '1601461269',
-			// 		content: '你先唱',
-			// 		noread: '2'
-			// 	},
-			// 	{
-			// 		avatar: '../../static/mb.jpg',
-			// 		username: '可爱面包',
-			// 		updata_time: '1601461369',
-			// 		content: '靓仔~',
-			// 		noread: '5'
-			// 	},
-			// 	{
-			// 		avatar: '../../static/kx.jpg',
-			// 		username: 'W',
-			// 		updata_time: '1601461469',
-			// 		content: '面包好可爱',
-			// 		noread: '1'
-			// 	},
-			// 	{
-			// 		avatar: '../../static/xkm.jpg',
-			// 		username: '小可的猫',
-			// 		updata_time: '1601461489',
-			// 		content: '瞄~~~~~',
-			// 		noread: '1'
-			// 	}
-			// ]
-			
+			list:[],
+			isshow:true
 		};
 	},
 	// 监听下拉刷新
@@ -100,6 +63,7 @@ export default {
 				name:"Getmsglist"
 			}).then(res=>{
 				this.list = res.result.data
+				this.isshow = false
 			})
 		},
 		refres() {

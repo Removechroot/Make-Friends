@@ -1,5 +1,16 @@
 <template>
 	<view>
+		<!-- #ifdef MP-WEIXIN -->
+
+		<uni-nav-bar :shadow="false" :border="false">
+			<view slot="left" @click="clickLeft"><view class="iconfont icon-qiandao font-lg text-main ml-2"></view></view>
+			<view class="flex flex-1 justify-center align-center" style="background: #F7F7F7;border-radius: 4px; min-width: 600upx; color: #CCCCCC;height: 60upx;" @click="clickCenten">
+				<text class="iconfont icon-sousuo font-sm"></text>
+				<view class="font-sm">搜索</view>
+			</view>
+			<view slot="right" @click="clickright"><view class="iconfont icon-fatie font-lg"></view></view>
+		</uni-nav-bar>
+		<!-- #endif -->
 		<!-- 顶部选项卡 -->
 		<scroll-view scroll-x class="scroll-row border-bottom border-light-secondary" :scroll-into-view="scrollInto" scroll-with-animation style="height: 100rpx;">
 			<view
@@ -32,7 +43,11 @@
 						</template>
 					</template>
 					<template v-else>
-						<nothing></nothing>
+						<nothing>
+							<view class="font-sm">
+								该模块与推荐模块一致，请体验推荐模块！
+							</view>
+						</nothing>
 					</template>
 				</scroll-view>
 			</swiper-item>
@@ -42,14 +57,18 @@
 
 <script>
 import commonList from '@/components/common/common-list.vue';
-// import loadMore from '@/components/common/load-more';
+// #ifdef MP-WEIXIN
+import uniNavBar from '@/components/uni-ui/uni-nav-bar/uni-nav-bar.vue';
+// #endif
 import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 import GetNice from '../../util/GetNice.js';
 export default {
 	components: {
 		commonList,
-		// loadMore
-		uniLoadMore
+		uniLoadMore,
+		// #ifdef MP-WEIXIN
+		uniNavBar
+		// #endif
 	},
 	data() {
 		return {
@@ -59,11 +78,11 @@ export default {
 			tabIndex: 0,
 			tabBars: [
 				{
-					name: '关注',
+					name: '推荐',
 					id: 0
 				},
 				{
-					name: '推荐',
+					name: '测试',
 					id: 1
 				},
 				{
@@ -125,9 +144,30 @@ export default {
 		}
 	},
 	onTabItemTap(e) {
-		if (e.index !== 0) return; 
+		if (e.index !== 0) return;
 	},
 	methods: {
+		// #ifdef MP-WEIXIN
+
+		clickLeft() {
+			setTimeout(()=>{
+				uni.showModal({
+					content:"签到成功",
+					showCancel:false
+				})
+			},500)
+		},
+		clickCenten() {
+			uni.navigateTo({
+				url: '../search/search?type=post'
+			});
+		},
+		clickright() {
+			uni.navigateTo({
+				url:"../add-input/add-input"
+			})
+		},
+		// #endif
 		async GetData() {
 			let res = await uniCloud.callFunction({
 				name: 'gettablelist',
@@ -150,14 +190,13 @@ export default {
 		},
 		Follow(data) {
 			let { id, type, index } = data;
-			let Uid = JSON.parse(uni.getStorageSync("UserInfo"))
 			uniCloud
 				.callFunction({
 					name: 'update',
 					data: {
 						type: 'isFollow',
 						id,
-						isFollow: type,
+						isFollow: type
 					}
 				})
 				.then(res => {
@@ -198,7 +237,7 @@ export default {
 			// 调用 云函数
 			uniCloud
 				.callFunction({
-					name: 'gettablelist', 
+					name: 'gettablelist',
 					data: {
 						page: this.page
 					}

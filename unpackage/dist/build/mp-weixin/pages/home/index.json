@@ -2,6 +2,7 @@
   "navigationBarBackgroundColor": "#FF4A6A",
   "usingComponents": {
     "uni-load-more": "/components/uni-load-more/uni-load-more",
-    "common-list": "/components/common/common-list"
+    "common-list": "/components/common/common-list",
+    "uni-nav-bar": "/components/uni-ui/uni-nav-bar/uni-nav-bar"
   }
 }
